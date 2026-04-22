@@ -13,10 +13,10 @@ def spectral_clustering(G):
         tuple: (Danh_sách_node_Cụm_1, Danh_sách_node_Cụm_2, tỷ_lệ_cắt_tốt_nhất)
     """
     # Bước 1: Tạo ma trận Laplace 
-    L = nx.laplacian_matrix(G).astype(float)
+    L = nx.laplacian_matrix(G).toarray()
     
     # Bước 2: Tìm Trị riêng (Eigenvalues) và Vector riêng (Eigenvectors)
-    eigenvalues, eigenvectors = scipy.sparse.linalg.eigs(L, k=3, which='SM')
+    eigenvalues, eigenvectors = scipy.linalg.eigh(L)
     
     # Lấy vector riêng thứ 2 và ép kiểu về số thực
     v2 = np.real(eigenvectors[:, 1]) 
