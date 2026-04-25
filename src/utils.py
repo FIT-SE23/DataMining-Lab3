@@ -47,6 +47,17 @@ def load_and_preprocess_graph(filepath):
                 break 
         if not removed_any:
             break
+
+    while True:
+        cutset = nx.minimum_edge_cut(S)
+        if len(cutset) > 10:
+            break # Nếu đường cắt lớn hơn 10 cạnh, nghĩa là đồ thị đã nguyên khối (robust)
+        
+        # Nếu đường cắt nhỏ hơn 10, cắt đứt nó đi
+        S.remove_edges_from(cutset)
+        # Chỉ giữ lại phần lõi lớn nhất
+        largest_cc = max(nx.connected_components(S), key=len)
+        S = nx.Graph(S.subgraph(largest_cc))
             
     # Đánh lại nhãn các node thành số nguyên từ 0 đến N-1
     return nx.convert_node_labels_to_integers(S)
