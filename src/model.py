@@ -1,6 +1,6 @@
 import networkx as nx
 import numpy as np
-import scipy.sparse.linalg
+import scipy.linalg
 
 def spectral_clustering(G):
     """
